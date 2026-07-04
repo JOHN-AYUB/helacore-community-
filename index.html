@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helacore Community — Empower · Grow · Connect · Impact</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          black: '#18181B',
+          primary: '#FACC15',
+          primaryDark: '#EAB308',
+          gray: '#F4F4F5'
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'serif']
+      },
+      boxShadow: {
+        'card': '0 0 0 1px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.05)',
+        'float': '0 20px 40px -10px rgba(0,0,0,0.1)',
+        'glow': '0 0 20px rgba(250,204,21,0.3)',
+        'hard': '3px 3px 0px 0px rgba(0,0,0,1)',
+        'hard-lg': '4px 4px 0px 0px rgba(0,0,0,1)',
+        'hard-hover': '1px 1px 0px 0px rgba(0,0,0,1)',
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; }
+  .font-serif { font-family: 'Playfair Display', serif; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pulse-dot {
+    50% { opacity: 0.5; }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-fade-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+    opacity: 0;
+  }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+
+  .btn-hard {
+    border: 1px solid black;
+    box-shadow: 3px 3px 0px 0px rgba(0,0,0,1);
+    transition: all 150ms cubic-bezier(0.4,0,0.2,1);
+  }
+  .btn-hard:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px 0px rgba(0,0,0,1);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(24,24,27,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(24,24,27,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .pillar-tab.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+
+  .initiative-card {
+    transition: all 200ms cubic-bezier(0.4,0,0.2,1);
+  }
+  .initiative-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+  }
+
+  .stat-number {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms cubic-bezier(0.4,0,0.2,1), padding 300ms;
+  }
+  .faq-answer.open {
+    max-height: 500px;
+  }
+
+  .top-banner {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+  .top-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%; height: 100%;
+    background: linear-gradient(to left, rgba(250,204,21,0.1), transparent);
+    pointer-events: none;
+  }
+
+  .nav-scrolled {
+    background: rgba(255,255,255,0.92) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #fff;
+    transition: all 150ms;
+  }
+  .initiative-card:hover .feature-icon {
+    background: #FACC15;
+    border-color: #000;
+  }
+
+  .mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms ease;
+  }
+  .mobile-menu.open {
+    max-height: 500px;
+  }
+
+  .pillar-empower { --accent: #8B5CF6; }
+  .pillar-grow { --accent: #FACC15; }
+  .pillar-connect { --accent: #3B82F6; }
+  .pillar-impact { --accent: #10B981; }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body class="bg-[#FAFAFA] text-zinc-800 antialiased">
+
+<!-- ===== TOP BANNER ===== -->
+<div class="top-banner py-2.5 px-4 text-center relative z-50">
+  <p class="text-xs font-medium tracking-wide">
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-primary mr-2" style="animation: pulse-dot 2s infinite;"></span>
+    Helacore Community — Where Business Growth Fuels Social Impact
+    <span class="inline-block w-2 h-2 rounded-full bg-brand-primary ml-2" style="animation: pulse-dot 2s infinite;"></span>
+  </p>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar" class="sticky top-0 z-40 bg-white transition-all duration-200">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-8 h-8 rounded-lg bg-brand-primary border border-black flex items-center justify-center font-bold text-sm shadow-hard group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-hard-hover transition-all">H</div>
+      <span class="font-semibold text-zinc-800 tracking-tight">Helacore <span class="text-zinc-400 font-normal">Community</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#pillars" class="text-sm font-medium text-zinc-500 hover:text-black transition-colors duration-150">Pillars</a>
+      <a href="#initiatives" class="text-sm font-medium text-zinc-500 hover:text-black transition-colors duration-150">Initiatives</a>
+      <a href="#dashboard" class="text-sm font-medium text-zinc-500 hover:text-black transition-colors duration-150">Impact</a>
+      <a href="#super-app" class="text-sm font-medium text-zinc-500 hover:text-black transition-colors duration-150">Super App</a>
+      <a href="#faq" class="text-sm font-medium text-zinc-500 hover:text-black transition-colors duration-150">FAQ</a>
+    </div>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="#volunteer" class="text-sm font-medium text-zinc-600 hover:text-black transition-colors">Volunteer</a>
+      <a href="#join" class="btn-hard bg-black text-white px-5 py-2.5 rounded-lg text-sm font-bold inline-flex items-center gap-2">
+        Join Community
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+      </a>
+    </div>
+    <button id="mobile-toggle" class="md:hidden p-2 rounded-lg hover:bg-zinc-100 transition">
+      <span class="iconify" data-icon="lucide:menu" data-width="22"></span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="mobile-menu md:hidden border-t border-zinc-100">
+    <div class="px-6 py-4 flex flex-col gap-3">
+      <a href="#pillars" class="text-sm font-medium text-zinc-600 py-2">Pillars</a>
+      <a href="#initiatives" class="text-sm font-medium text-zinc-600 py-2">Initiatives</a>
+      <a href="#dashboard" class="text-sm font-medium text-zinc-600 py-2">Impact</a>
+      <a href="#super-app" class="text-sm font-medium text-zinc-600 py-2">Super App</a>
+      <a href="#faq" class="text-sm font-medium text-zinc-600 py-2">FAQ</a>
+      <a href="#join" class="btn-hard bg-black text-white px-5 py-2.5 rounded-lg text-sm font-bold text-center mt-2">Join Community</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="relative overflow-hidden">
+  <div class="grid-bg absolute inset-0" style="mask-image: linear-gradient(to bottom, black 40%, transparent 95%);"></div>
+  <div class="absolute top-20 -left-20 w-72 h-72 bg-brand-primary/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-10 -right-20 w-96 h-96 bg-brand-primary/5 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-5xl mx-auto pt-16 pb-20 px-4 flex flex-col items-center text-center">
+    <div class="animate-fade-up">
+      <div class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white shadow-sm px-4 py-1.5 mb-8">
+        <span class="w-2 h-2 rounded-full bg-brand-primary"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-zinc-500">20 Community Programs</span>
+      </div>
+    </div>
+
+    <h1 class="animate-fade-up delay-100 text-4xl md:text-7xl font-medium tracking-tight leading-[1.05]">
+      Empower Communities.<br>
+      <span class="font-serif italic text-brand-primaryDark">Grow Together.</span>
+    </h1>
+
+    <p class="animate-fade-up delay-200 mt-6 text-base md:text-lg text-zinc-500 font-light max-w-2xl leading-relaxed">
+      Helacore Community transforms business success into social impact through four pillars — Empower, Grow, Connect, and Impact — creating a cycle where every subscription fuels community transformation.
+    </p>
+
+    <div class="animate-fade-up delay-300 flex flex-col sm:flex-row gap-4 mt-10">
+      <a href="#pillars" class="btn-hard bg-black text-white px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2">
+        Explore the Pillars
+        <span class="iconify" data-icon="lucide:arrow-down" data-width="16"></span>
+      </a>
+      <a href="#super-app" class="btn-hard bg-white text-black px-8 py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2">
+        <span class="iconify" data-icon="lucide:smartphone" data-width="16"></span>
+        Super App
+      </a>
+    </div>
+
+    <!-- Pillar Pills -->
+    <div class="animate-fade-up delay-400 mt-12 flex flex-wrap justify-center gap-3">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-xs font-bold">
+        <span class="iconify" data-icon="lucide:graduation-cap" data-width="14"></span> Empower
+      </span>
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-700 text-xs font-bold">
+        <span class="iconify" data-icon="lucide:trending-up" data-width="14"></span> Grow
+      </span>
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
+        <span class="iconify" data-icon="lucide:users" data-width="14"></span> Connect
+      </span>
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+        <span class="iconify" data-icon="lucide:heart-handshake" data-width="14"></span> Impact
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOUR PILLARS ===== -->
+<section id="pillars" class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">The Foundation</span>
+      <h2 class="text-3xl md:text-4xl font-medium tracking-tight">Four Pillars of Change</h2>
+      <p class="mt-4 text-zinc-500 max-w-xl mx-auto">Every initiative is organized around a clear purpose — turning disconnected programs into a unified movement.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Empower -->
+      <div class="scroll-reveal group relative bg-white rounded-2xl border border-zinc-200 p-8 hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 to-violet-300"></div>
+        <div class="w-14 h-14 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center mb-6">
+          <span class="iconify text-violet-600" data-icon="lucide:graduation-cap" data-width="24"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Empower</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">AI education, digital literacy, mentorship, youth and women entrepreneurship.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-violet-500" data-icon="lucide:check" data-width="14"></span>AI Business Academy</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-violet-500" data-icon="lucide:check" data-width="14"></span>Youth Innovation Hub</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-violet-500" data-icon="lucide:check" data-width="14"></span>Women in Business</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-violet-500" data-icon="lucide:check" data-width="14"></span>Digital Inclusion</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-violet-500" data-icon="lucide:check" data-width="14"></span>Mentorship Network</li>
+        </ul>
+      </div>
+
+      <!-- Grow -->
+      <div class="scroll-reveal delay-100 group relative bg-white rounded-2xl border border-zinc-200 p-8 hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300"></div>
+        <div class="w-14 h-14 rounded-xl bg-yellow-50 border border-yellow-200 flex items-center justify-center mb-6">
+          <span class="iconify text-yellow-600" data-icon="lucide:trending-up" data-width="24"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Grow</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Business grants, AI advisory, marketplace, financial wellness, farmer support.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-yellow-500" data-icon="lucide:check" data-width="14"></span>Community Fund</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-yellow-500" data-icon="lucide:check" data-width="14"></span>AI Business Advisor</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-yellow-500" data-icon="lucide:check" data-width="14"></span>Farmer Empowerment</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-yellow-500" data-icon="lucide:check" data-width="14"></span>Financial Wellness</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-yellow-500" data-icon="lucide:check" data-width="14"></span>Job Portal</li>
+        </ul>
+      </div>
+
+      <!-- Connect -->
+      <div class="scroll-reveal delay-200 group relative bg-white rounded-2xl border border-zinc-200 p-8 hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-300"></div>
+        <div class="w-14 h-14 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center mb-6">
+          <span class="iconify text-blue-600" data-icon="lucide:users" data-width="24"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Connect</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Community marketplace, networking, volunteer programs, events, partnerships.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-blue-500" data-icon="lucide:check" data-width="14"></span>Marketplace</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-blue-500" data-icon="lucide:check" data-width="14"></span>Events Platform</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-blue-500" data-icon="lucide:check" data-width="14"></span>Volunteer Network</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-blue-500" data-icon="lucide:check" data-width="14"></span>Business Challenges</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-blue-500" data-icon="lucide:check" data-width="14"></span>AI Community Assistant</li>
+        </ul>
+      </div>
+
+      <!-- Impact -->
+      <div class="scroll-reveal delay-300 group relative bg-white rounded-2xl border border-zinc-200 p-8 hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-emerald-300"></div>
+        <div class="w-14 h-14 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-6">
+          <span class="iconify text-emerald-600" data-icon="lucide:heart-handshake" data-width="24"></span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Impact</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Sustainability, emergency support, public impact dashboard, annual awards.</p>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-emerald-500" data-icon="lucide:check" data-width="14"></span>Impact Dashboard</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-emerald-500" data-icon="lucide:check" data-width="14"></span>Sustainability Initiative</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-emerald-500" data-icon="lucide:check" data-width="14"></span>Emergency Support</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-emerald-500" data-icon="lucide:check" data-width="14"></span>Impact Awards</li>
+          <li class="flex items-center gap-2 text-xs text-zinc-600"><span class="iconify text-emerald-500" data-icon="lucide:check" data-width="14"></span>Impact Reports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ALL 20 INITIATIVES ===== -->
+<section id="initiatives" class="py-24 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 scroll-reveal">
+      <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">20 Programs</span>
+      <h2 class="text-3xl md:text-4xl font-medium tracking-tight">All Community Initiatives</h2>
+      <p class="mt-4 text-zinc-500 max-w-xl mx-auto">Filter by pillar to explore every program under the Helacore Community umbrella.</p>
+    </div>
+
+    <!-- Pillar Tabs -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <button onclick="filterPillar('all')" class="pillar-tab active px-5 py-2.5 rounded-full border border-zinc-300 text-sm font-bold transition-all duration-150">All</button>
+      <button onclick="filterPillar('empower')" class="pillar-tab px-5 py-2.5 rounded-full border border-zinc-300 text-sm font-bold transition-all duration-150 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-violet-500"></span> Empower
+      </button>
+      <button onclick="filterPillar('grow')" class="pillar-tab px-5 py-2.5 rounded-full border border-zinc-300 text-sm font-bold transition-all duration-150 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-yellow-500"></span> Grow
+      </button>
+      <button onclick="filterPillar('connect')" class="pillar-tab px-5 py-2.5 rounded-full border border-zinc-300 text-sm font-bold transition-all duration-150 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span> Connect
+      </button>
+      <button onclick="filterPillar('impact')" class="pillar-tab px-5 py-2.5 rounded-full border border-zinc-300 text-sm font-bold transition-all duration-150 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Impact
+      </button>
+    </div>
+
+    <!-- Initiative Cards Grid -->
+    <div id="initiatives-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 1. Community Fund -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="grow">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-yellow-600" data-icon="lucide:hand-coins" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Grow</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Helacore Community Fund</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">A grant program that supports promising entrepreneurs and community projects with transparent allocation.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Monthly Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Seed Funding</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Youth Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Women Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Farmer Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Emergency Fund</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Community Voting</span>
+        </div>
+      </div>
+
+      <!-- 2. AI Business Academy -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="empower">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-violet-600" data-icon="lucide:book-open" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">Empower</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">AI Business Academy</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Free online learning platform with certificates, AI tutor, and Swahili lessons for business skills.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">12 Courses</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Certificates</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Tutor</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Swahili</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Offline</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Quizzes</span>
+        </div>
+      </div>
+
+      <!-- 3. AI Business Advisor -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="grow">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-yellow-600" data-icon="lucide:bot" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Grow</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Free AI Business Advisor</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Free Helacore AI assistant answering business questions across multiple platforms.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Website</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Mobile App</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">WhatsApp</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">SMS</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Voice</span>
+        </div>
+      </div>
+
+      <!-- 4. Business Challenges -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="connect">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-blue-600" data-icon="lucide:trophy" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Connect</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Community Business Challenges</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Regular competitions encouraging innovation with cash prizes, mentorship, and investor meetings.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Youth Challenge</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Women Challenge</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Green Challenge</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Agri Challenge</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">School Challenge</span>
+        </div>
+      </div>
+
+      <!-- 5. Farmer Empowerment -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="grow">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-yellow-600" data-icon="lucide:sprout" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Grow</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Farmer Empowerment Program</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Special support for farmers with AI-powered insights, market access, and agricultural guidance.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Weather</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Market Prices</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Pest Alerts</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Assistant</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Buyer Matching</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Livestock</span>
+        </div>
+      </div>
+
+      <!-- 6. Youth Innovation Hub -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="empower">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-violet-600" data-icon="lucide:lightbulb" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">Empower</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Youth Innovation Hub</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Supporting young innovators through mentorship, coding workshops, AI education, and startup incubation.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Mentorship</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Coding</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Education</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Robotics</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Hackathons</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Prototype Funding</span>
+        </div>
+      </div>
+
+      <!-- 7. Women in Business -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="empower">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-violet-600" data-icon="lucide:hand-heart" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">Empower</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Women in Business Initiative</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Dedicated support for women entrepreneurs with training, networking, and childcare support.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Training</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Financial Ed</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Networking</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Leadership</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Markets</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Childcare</span>
+        </div>
+      </div>
+
+      <!-- 8. Digital Inclusion -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="empower">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-violet-600" data-icon="lucide:monitor" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">Empower</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Digital Inclusion Program</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Helping communities gain access to technology through donations, hotspots, and solar stations.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Computer Donations</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Internet Hotspots</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Digital Centers</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Kiosks</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Solar Stations</span>
+        </div>
+      </div>
+
+      <!-- 9. Mentorship Network -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="empower">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-violet-600" data-icon="lucide:users-round" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">Empower</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Business Mentorship Network</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Connecting experienced entrepreneurs with beginners through matching, coaching, and community forums.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Mentor Matching</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Monthly Coaching</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Goal Tracking</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Video Meetings</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Forums</span>
+        </div>
+      </div>
+
+      <!-- 10. Community Marketplace -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="connect">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-blue-600" data-icon="lucide:store" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Connect</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Community Marketplace</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Allow members to buy and sell locally — products, produce, services, and partnerships.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Local Products</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Farm Produce</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Services</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Equipment</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Partnerships</span>
+        </div>
+      </div>
+
+      <!-- 11. Job Portal -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="grow">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-yellow-600" data-icon="lucide:briefcase" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Grow</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Job & Opportunity Portal</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Helping users access employment, freelance work, apprenticeships, and scholarships.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Jobs</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Freelance</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Apprenticeships</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Internships</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Scholarships</span>
+        </div>
+      </div>
+
+      <!-- 12. Financial Wellness -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="grow">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-yellow-600" data-icon="lucide:wallet" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Grow</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Financial Wellness Center</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Teaching responsible money management with interactive planning tools and education.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Budget Planner</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Savings</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Debt Calculator</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Emergency Fund</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Investment Ed</span>
+        </div>
+      </div>
+
+      <!-- 13. Impact Dashboard -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="impact">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-emerald-600" data-icon="lucide:bar-chart-3" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Impact</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Community Impact Dashboard</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Publicly displaying measurable outcomes — businesses created, jobs supported, lives changed.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Businesses</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Jobs</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Farmers</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Students</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Counties</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Carbon</span>
+        </div>
+      </div>
+
+      <!-- 14. Volunteer Network -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="connect">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-blue-600" data-icon="lucide:hand-helping" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Connect</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Volunteer Network</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Enabling people to contribute skills and time — from mentors to developers to lawyers.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Mentor</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Teacher</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Developer</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Accountant</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Lawyer</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Agri Specialist</span>
+        </div>
+      </div>
+
+      <!-- 15. AI Community Assistant -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="connect">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-blue-600" data-icon="lucide:message-circle" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Connect</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">AI Community Assistant</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">An AI assistant dedicated to community support — finding opportunities, grants, and mentors.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Find Opportunities</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Apply for Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Match Mentors</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Growth Plans</span>
+        </div>
+      </div>
+
+      <!-- 16. Impact Awards -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="impact">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-emerald-600" data-icon="lucide:award" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Impact</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Annual Impact Awards</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Recognizing outstanding contributions across entrepreneurship, farming, innovation, and sustainability.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Entrepreneur</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Farmer</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Youth Innovator</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Sustainability</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Innovation</span>
+        </div>
+      </div>
+
+      <!-- 17. Emergency Support -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="impact">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-emerald-600" data-icon="lucide:shield-alert" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Impact</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Disaster & Emergency Support</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Rapid assistance during crises — emergency grants, recovery plans, and volunteer mobilization.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Emergency Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Food Assistance</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Recovery Plans</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Assessment</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Volunteers</span>
+        </div>
+      </div>
+
+      <!-- 18. Sustainability -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="impact">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-emerald-600" data-icon="lucide:leaf" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Impact</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Sustainability Initiative</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Promoting environmentally responsible business practices across the community.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Tree Planting</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Solar Energy</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Recycling</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Water Conservation</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Carbon Tracking</span>
+        </div>
+      </div>
+
+      <!-- 19. Events Platform -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7" data-pillar="connect">
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon"><span class="iconify text-blue-600" data-icon="lucide:calendar-days" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Connect</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Community Events Platform</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Organizing and managing events — workshops, expos, conferences, and networking sessions.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Workshops</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Expos</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Conferences</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Field Days</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Webinars</span>
+        </div>
+      </div>
+
+      <!-- 20. Super App -->
+      <div class="initiative-card bg-zinc-50 rounded-2xl border border-zinc-200 p-7 relative overflow-hidden" data-pillar="all">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-yellow-400 via-blue-400 to-emerald-500"></div>
+        <div class="flex items-start justify-between mb-5">
+          <div class="feature-icon bg-brand-primary border-brand-primaryDark"><span class="iconify text-black" data-icon="lucide:smartphone" data-width="22"></span></div>
+          <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-black text-white">All Pillars</span>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Helacore Community Super App</h3>
+        <p class="text-sm text-zinc-500 leading-relaxed mb-4">Everything in one place — learn, apply, connect, sell, track, and grow your verified profile.</p>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Learn</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">AI Advice</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Grants</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Marketplace</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Farming</span>
+          <span class="text-[10px] font-medium px-2 py-1 rounded bg-white border border-zinc-200 text-zinc-600">Emergency</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPACT DASHBOARD ===== -->
+<section id="dashboard" class="py-24 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-black"></div>
+  <div class="absolute inset-0 grid-bg opacity-10"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-primary mb-4 block">Transparent Impact</span>
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-white">Measurable <span class="font-serif italic text-brand-primary">Outcomes</span></h2>
+      <p class="mt-4 text-zinc-400 max-w-xl mx-auto">Every number represents a real person, a real business, a real community transformed.</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-3xl md:text-4xl font-bold text-brand-primary" data-target="2400">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Businesses Created</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-3xl md:text-4xl font-bold text-brand-primary" data-target="5800">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Jobs Supported</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-3xl md:text-4xl font-bold text-brand-primary" data-target="3200">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Farmers Assisted</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-3xl md:text-4xl font-bold text-brand-primary" data-target="12000">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Students Trained</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-3xl md:text-4xl font-bold text-brand-primary" data-target="4100">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Women Empowered</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-white" data-target="850">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Grants Awarded</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-white" data-target="47">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Counties Reached</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-white" data-target="340">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Tons CO₂ Reduced</div>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-white" data-target="2100000">0</div>
+        <div class="text-xs text-zinc-400 mt-2 font-medium">Investment Value (KES)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUPER APP SHOWCASE ===== -->
+<section id="super-app" class="py-24 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">Everything in One Place</span>
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">Helacore Community <span class="font-serif italic text-brand-primaryDark">Super App</span></h2>
+        <p class="text-zinc-500 leading-relaxed mb-8">One app to learn, grow, connect, and make an impact. Your verified community profile unlocks the full ecosystem.</p>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-100 hover:border-brand-primary/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
+              <span class="iconify text-violet-600" data-icon="lucide:graduation-cap" data-width="18"></span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold">Learn & Get Certified</h4>
+              <p class="text-xs text-zinc-500 mt-1">Access 12+ courses, earn certificates and digital badges</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-100 hover:border-brand-primary/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
+              <span class="iconify text-yellow-600" data-icon="lucide:bot" data-width="18"></span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold">Ask AI for Advice</h4>
+              <p class="text-xs text-zinc-500 mt-1">Get instant business guidance, farming insights, and grant help</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-100 hover:border-brand-primary/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <span class="iconify text-blue-600" data-icon="lucide:store" data-width="18"></span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold">Sell & Connect</h4>
+              <p class="text-xs text-zinc-500 mt-1">List products, find mentors, join events, and build partnerships</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-100 hover:border-brand-primary/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+              <span class="iconify text-emerald-600" data-icon="lucide:shield-check" data-width="18"></span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold">Emergency & Impact</h4>
+              <p class="text-xs text-zinc-500 mt-1">Get crisis support, track your impact, and receive emergency help</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Mockup -->
+      <div class="flex justify-center">
+        <div class="relative">
+          <div class="w-[280px] h-[560px] bg-zinc-900 rounded-[40px] border-4 border-zinc-800 shadow-2xl overflow-hidden relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-zinc-900 rounded-b-2xl z-10"></div>
+            <div class="w-full h-full bg-gradient-to-b from-brand-primary/20 via-black to-black p-5 pt-10">
+              <div class="flex items-center gap-2 mb-6">
+                <div class="w-6 h-6 rounded-md bg-brand-primary flex items-center justify-center text-[10px] font-bold">H</div>
+                <span class="text-white text-xs font-semibold">Helacore</span>
+              </div>
+
+              <div class="space-y-3">
+                <div class="bg-white/10 rounded-xl p-3 backdrop-blur-sm">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="iconify text-brand-primary" data-icon="lucide:bot" data-width="14"></span>
+                    <span class="text-[10px] text-white font-medium">AI Advisor</span>
+                  </div>
+                  <p class="text-[9px] text-zinc-400">How can I help your business today?</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-white/10 rounded-xl p-3 text-center backdrop-blur-sm">
+                    <span class="iconify text-violet-400 mx-auto" data-icon="lucide:book-open" data-width="18"></span>
+                    <p class="text-[9px] text-zinc-300 mt-1">Courses</p>
+                  </div>
+                  <div class="bg-white/10 rounded-xl p-3 text-center backdrop-blur-sm">
+                    <span class="iconify text-yellow-400 mx-auto" data-icon="lucide:hand-coins" data-width="18"></span>
+                    <p class="text-[9px] text-zinc-300 mt-1">Grants</p>
+                  </div>
+                  <div class="bg-white/10 rounded-xl p-3 text-center backdrop-blur-sm">
+                    <span class="iconify text-blue-400 mx-auto" data-icon="lucide:store" data-width="18"></span>
+                    <p class="text-[9px] text-zinc-300 mt-1">Market</p>
+                  </div>
+                  <div class="bg-white/10 rounded-xl p-3 text-center backdrop-blur-sm">
+                    <span class="iconify text-emerald-400 mx-auto" data-icon="lucide:sprout" data-width="18"></span>
+                    <p class="text-[9px] text-zinc-300 mt-1">Farming</p>
+                  </div>
+                </div>
+
+                <div class="bg-brand-primary/20 rounded-xl p-3 border border-brand-primary/30">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-[10px] text-brand-primary font-bold">Your Impact</span>
+                    <span class="text-[9px] text-zinc-400">Level 3</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-brand-primary rounded-full" style="width: 65%;"></div>
+                  </div>
+                </div>
+
+                <div class="bg-white/10 rounded-xl p-3 backdrop-blur-sm">
+                  <div class="flex items-center gap-2">
+                    <span class="iconify text-emerald-400" data-icon="lucide:shield-alert" data-width="14"></span>
+                    <span class="text-[10px] text-white font-medium">Emergency Support</span>
+                  </div>
+                  <p class="text-[9px] text-zinc-400 mt-1">Tap for immediate assistance</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating elements -->
+          <div class="absolute -top-4 -right-8 bg-white rounded-xl shadow-float p-3 animate-float">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-emerald-500" data-icon="lucide:trending-up" data-width="16"></span>
+              <span class="text-xs font-bold text-emerald-600">+24%</span>
+            </div>
+            <p class="text-[9px] text-zinc-500 mt-0.5">Growth this month</p>
+          </div>
+          <div class="absolute -bottom-4 -left-8 bg-white rounded-xl shadow-float p-3 animate-float" style="animation-delay: 1s;">
+            <div class="flex items-center gap-2">
+              <span class="iconify text-brand-primary" data-icon="lucide:award" data-width="16"></span>
+              <span class="text-xs font-bold">Certified!</span>
+            </div>
+            <p class="text-[9px] text-zinc-500 mt-0.5">Business Management</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== UNIFYING VISION ===== -->
+<section class="py-24 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-[#FAFAFA] to-zinc-100"></div>
+  <div class="relative max-w-4xl mx-auto text-center">
+    <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">A Unifying Vision</span>
+    <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-6">Business Growth Fuels <span class="font-serif italic text-brand-primaryDark">Social Impact</span></h2>
+    <p class="text-zinc-500 leading-relaxed max-w-2xl mx-auto mb-12">
+      Rather than disconnected programs, every initiative is organized around four pillars that reflect Helacore's mission. As Helacore grows, every subscription and business success contributes to expanding these community initiatives — creating a cycle where <strong class="text-zinc-800">business growth directly fuels social impact</strong>.
+    </p>
+
+    <div class="grid md:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white rounded-2xl border border-zinc-200 p-6 text-center shadow-card">
+        <div class="w-12 h-12 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center mx-auto mb-4">
+          <span class="iconify text-violet-600" data-icon="lucide:graduation-cap" data-width="20"></span>
+        </div>
+        <h3 class="text-sm font-bold mb-1">Empower</h3>
+        <p class="text-[11px] text-zinc-500">Education, literacy, mentorship, youth & women</p>
+      </div>
+      <div class="bg-white rounded-2xl border border-zinc-200 p-6 text-center shadow-card">
+        <div class="w-12 h-12 rounded-xl bg-yellow-50 border border-yellow-200 flex items-center justify-center mx-auto mb-4">
+          <span class="iconify text-yellow-600" data-icon="lucide:trending-up" data-width="20"></span>
+        </div>
+        <h3 class="text-sm font-bold mb-1">Grow</h3>
+        <p class="text-[11px] text-zinc-500">Grants, advisory, marketplace, wellness, farming</p>
+      </div>
+      <div class="bg-white rounded-2xl border border-zinc-200 p-6 text-center shadow-card">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto mb-4">
+          <span class="iconify text-blue-600" data-icon="lucide:users" data-width="20"></span>
+        </div>
+        <h3 class="text-sm font-bold mb-1">Connect</h3>
+        <p class="text-[11px] text-zinc-500">Marketplace, networking, volunteers, events</p>
+      </div>
+      <div class="bg-white rounded-2xl border border-zinc-200 p-6 text-center shadow-card">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
+          <span class="iconify text-emerald-600" data-icon="lucide:heart-handshake" data-width="20"></span>
+        </div>
+        <h3 class="text-sm font-bold mb-1">Impact</h3>
+        <p class="text-[11px] text-zinc-500">Sustainability, emergency, dashboard, awards</p>
+      </div>
+    </div>
+
+    <!-- Cycle Diagram -->
+    <div class="inline-flex items-center gap-3 bg-white rounded-full border border-zinc-200 px-6 py-3 shadow-card">
+      <span class="text-xs font-bold text-violet-600">Empower</span>
+      <span class="iconify text-zinc-300" data-icon="lucide:arrow-right" data-width="14"></span>
+      <span class="text-xs font-bold text-yellow-600">Grow</span>
+      <span class="iconify text-zinc-300" data-icon="lucide:arrow-right" data-width="14"></span>
+      <span class="text-xs font-bold text-blue-600">Connect</span>
+      <span class="iconify text-zinc-300" data-icon="lucide:arrow-right" data-width="14"></span>
+      <span class="text-xs font-bold text-emerald-600">Impact</span>
+      <span class="iconify text-zinc-300" data-icon="lucide:rotate-ccw" data-width="14"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VOLUNTEER ===== -->
+<section id="volunteer" class="py-24 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">Give Back</span>
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">Join the <span class="font-serif italic text-brand-primaryDark">Volunteer Network</span></h2>
+        <p class="text-zinc-500 leading-relaxed mb-6">Share your expertise and time to uplift communities. Whether you're a developer, accountant, lawyer, or mentor — your skills can change lives.</p>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="iconify text-brand-primary" data-icon="lucide:check-circle" data-width="18"></span>
+            <span class="text-sm text-zinc-700">Business Mentor — guide new entrepreneurs</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="iconify text-brand-primary" data-icon="lucide:check-circle" data-width="18"></span>
+            <span class="text-sm text-zinc-700">Teacher — lead workshops and courses</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="iconify text-brand-primary" data-icon="lucide:check-circle" data-width="18"></span>
+            <span class="text-sm text-zinc-700">Developer — build tools for the community</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="iconify text-brand-primary" data-icon="lucide:check-circle" data-width="18"></span>
+            <span class="text-sm text-zinc-700">Accountant — help with financial literacy</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="iconify text-brand-primary" data-icon="lucide:check-circle" data-width="18"></span>
+            <span class="text-sm text-zinc-700">Agricultural Specialist — support farmers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-zinc-50 rounded-2xl border border-zinc-200 p-8">
+        <h3 class="text-lg font-bold mb-6">Volunteer Sign-Up</h3>
+        <form id="volunteer-form" class="space-y-4">
+          <div>
+            <label class="text-xs font-medium text-zinc-600 block mb-1.5">Full Name</label>
+            <input type="text" placeholder="Your name" class="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-zinc-600 block mb-1.5">Email</label>
+            <input type="email" placeholder="you@email.com" class="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-zinc-600 block mb-1.5">Volunteer Role</label>
+            <select class="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition bg-white">
+              <option>Select a role</option>
+              <option>Business Mentor</option>
+              <option>Teacher</option>
+              <option>Software Developer</option>
+              <option>Accountant</option>
+              <option>Lawyer</option>
+              <option>Marketing Expert</option>
+              <option>Agricultural Specialist</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-hard bg-black text-white w-full py-3.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2">
+            Apply to Volunteer
+            <span class="iconify" data-icon="lucide:heart" data-width="14"></span>
+          </button>
+          <div id="volunteer-success" class="hidden text-center text-sm text-emerald-600 font-medium py-2">
+            ✓ Thank you! We'll be in touch soon.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="py-24 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4 block">Questions</span>
+      <h2 class="text-3xl md:text-4xl font-medium tracking-tight">Frequently Asked</h2>
+    </div>
+
+    <div class="space-y-3" id="faq-list">
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">Who can apply for Helacore Community Fund grants?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">Any promising entrepreneur, youth innovator, woman business owner, or farmer can apply. We also have emergency recovery grants for small businesses affected by crises. Community voting helps select some projects for transparency.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">Is the AI Business Academy really free?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">Yes, 100% free. All 12 courses including Business Management, Financial Literacy, AI for Small Businesses, and Climate-smart Agriculture are free. You also get certificates, quizzes, an AI tutor, Swahili lessons, and offline downloads at no cost.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">How does the Free AI Business Advisor work?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">It's available through our website, mobile app, WhatsApp, SMS, and voice assistant. You can ask questions like "How do I start a business?", "How do I price my products?", or "What licenses do I need?" and get instant, helpful answers.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">How do the four pillars work together?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">The pillars create a cycle: Empower (educate and skill), Grow (fund and advise), Connect (network and trade), Impact (measure and sustain). Success in one pillar feeds the next, creating a self-reinforcing movement where business growth fuels social impact.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">What is the Helacore Community Super App?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">It brings all 20 community programs into one mobile experience. You can learn skills, ask AI for advice, apply for grants, join events, find mentors, sell products, track business growth, access farming insights, receive emergency support, earn certificates, and build a verified community profile.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+          <span class="text-sm font-bold pr-4">How can I volunteer or contribute?</span>
+          <span class="iconify text-zinc-400 flex-shrink-0 transition-transform duration-200" data-icon="lucide:plus" data-width="18"></span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="text-sm text-zinc-500 leading-relaxed pb-6">Sign up through the Volunteer Network. We need business mentors, teachers, software developers, accountants, lawyers, marketing experts, and agricultural specialists. You can also contribute through the Community Fund or by offering your services on the marketplace.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="join" class="py-24 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-900"></div>
+  <div class="absolute inset-0 grid-bg opacity-5"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-primary/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-3xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 mb-8">
+      <span class="w-2 h-2 rounded-full bg-brand-primary" style="animation: pulse-dot 2s infinite;"></span>
+      <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Join the Movement</span>
+    </div>
+
+    <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-white mb-6">
+      Ready to Make an <span class="font-serif italic text-brand-primary">Impact</span>?
+    </h2>
+    <p class="text-zinc-400 leading-relaxed max-w-xl mx-auto mb-10">
+      Whether you want to learn, start a business, volunteer, or apply for a grant — the Helacore Community is your ecosystem for growth and impact.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="bg-brand-primary text-black px-8 py-4 rounded-xl text-sm font-bold border border-brand-primaryDark shadow-[3px_3px_0_0_rgba(250,204,21,0.4)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_rgba(250,204,21,0.4)] transition-all flex items-center justify-center gap-2">
+        Join the Community
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+      </a>
+      <a href="#volunteer" class="bg-white/10 text-white px-8 py-4 rounded-xl text-sm font-bold border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center gap-2">
+        <span class="iconify" data-icon="lucide:heart" data-width="16"></span>
+        Volunteer
+      </a>
+    </div>
+
+    <div class="mt-12 flex flex-wrap justify-center gap-6 text-xs text-zinc-500">
+      <span class="flex items-center gap-1.5"><span class="iconify text-brand-primary" data-icon="lucide:check" data-width="12"></span> Free to join</span>
+      <span class="flex items-center gap-1.5"><span class="iconify text-brand-primary" data-icon="lucide:check" data-width="12"></span> 20 programs</span>
+      <span class="flex items-center gap-1.5"><span class="iconify text-brand-primary" data-icon="lucide:check" data-width="12"></span> 47 counties</span>
+      <span class="flex items-center gap-1.5"><span class="iconify text-brand-primary" data-icon="lucide:check" data-width="12"></span> Transparent impact</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-black py-16 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-brand-primary border border-brand-primaryDark flex items-center justify-center font-bold text-sm">H</div>
+          <span class="text-white font-semibold">Helacore Community</span>
+        </div>
+        <p class="text-xs text-zinc-500 leading-relaxed">Where business growth fuels social impact. Empower · Grow · Connect · Impact.</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Pillars</h4>
+        <ul class="space-y-2">
+          <li><a href="#pillars" class="text-sm text-zinc-500 hover:text-white transition-colors">Empower</a></li>
+          <li><a href="#pillars" class="text-sm text-zinc-500 hover:text-white transition-colors">Grow</a></li>
+          <li><a href="#pillars" class="text-sm text-zinc-500 hover:text-white transition-colors">Connect</a></li>
+          <li><a href="#pillars" class="text-sm text-zinc-500 hover:text-white transition-colors">Impact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Programs</h4>
+        <ul class="space-y-2">
+          <li><a href="#initiatives" class="text-sm text-zinc-500 hover:text-white transition-colors">Community Fund</a></li>
+          <li><a href="#initiatives" class="text-sm text-zinc-500 hover:text-white transition-colors">AI Academy</a></li>
+          <li><a href="#initiatives" class="text-sm text-zinc-500 hover:text-white transition-colors">Farmer Program</a></li>
+          <li><a href="#initiatives" class="text-sm text-zinc-500 hover:text-white transition-colors">Super App</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Get Involved</h4>
+        <ul class="space-y-2">
+          <li><a href="#volunteer" class="text-sm text-zinc-500 hover:text-white transition-colors">Volunteer</a></li>
+          <li><a href="#join" class="text-sm text-zinc-500 hover:text-white transition-colors">Join Community</a></li>
+          <li><a href="#dashboard" class="text-sm text-zinc-500 hover:text-white transition-colors">Impact Dashboard</a></li>
+          <li><a href="#faq" class="text-sm text-zinc-500 hover:text-white transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-zinc-600">© 2025 Helacore Community. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="text-zinc-600 hover:text-white transition-colors"><span class="iconify" data-icon="lucide:twitter" data-width="16"></span></a>
+        <a href="#" class="text-zinc-600 hover:text-white transition-colors"><span class="iconify" data-icon="lucide:instagram" data-width="16"></span></a>
+        <a href="#" class="text-zinc-600 hover:text-white transition-colors"><span class="iconify" data-icon="lucide:linkedin" data-width="16"></span></a>
+        <a href="#" class="text-zinc-600 hover:text-white transition-colors"><span class="iconify" data-icon="lucide:github" data-width="16"></span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== Mobile Menu Toggle =====
+document.getElementById('mobile-toggle').addEventListener('click', function() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.remove('open');
+  });
+});
+
+// ===== Navbar Scroll Effect =====
+window.addEventListener('scroll', function() {
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('nav-scrolled');
+  } else {
+    navbar.classList.remove('nav-scrolled');
+  }
+});
+
+// ===== Pillar Filter =====
+function filterPillar(pillar) {
+  // Update active tab
+  document.querySelectorAll('.pillar-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  event.target.closest('.pillar-tab').classList.add('active');
+
+  // Filter cards
+  const cards = document.querySelectorAll('.initiative-card');
+  cards.forEach(card => {
+    const cardPillar = card.getAttribute('data-pillar');
+    if (pillar === 'all' || cardPillar === pillar || cardPillar === 'all') {
+      card.style.display = '';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        card.style.transition = 'all 300ms ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 50);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ===== FAQ Accordion =====
+function toggleFaq(button) {
+  const answer = button.nextElementSibling;
+  const icon = button.querySelector('.iconify');
+  const isOpen = answer.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-toggle .iconify').forEach(i => {
+    i.setAttribute('data-icon', 'lucide:plus');
+    i.style.transform = 'rotate(0deg)';
+  });
+
+  // Open clicked if was closed
+  if (!isOpen) {
+    answer.classList.add('open');
+    icon.setAttribute('data-icon', 'lucide:minus');
+    icon.style.transform = 'rotate(180deg)';
+  }
+}
+
+// ===== Counter Animation =====
+function animateCounters() {
+  const counters = document.querySelectorAll('.stat-number[data-target]');
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    const duration = 2000;
+    const start = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const current = Math.floor(eased * target);
+
+      if (target >= 1000000) {
+        counter.textContent = (current / 1000000).toFixed(1) + 'M+';
+      } else if (target >= 1000) {
+        counter.textContent = current.toLocaleString() + '+';
+      } else {
+        counter.textContent = current + '+';
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  });
+}
+
+// ===== Scroll Reveal =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+
+      // Trigger counter animation when dashboard is visible
+      if (entry.target.closest('#dashboard') || entry.target.id === 'dashboard') {
+        animateCounters();
+      }
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+// Also observe the dashboard section for counter animation
+const dashboardSection = document.getElementById('dashboard');
+if (dashboardSection) {
+  const dashboardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        dashboardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  dashboardObserver.observe(dashboardSection);
+}
+
+// ===== Volunteer Form =====
+document.getElementById('volunteer-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button[type="submit"]');
+  const success = document.getElementById('volunteer-success');
+
+  btn.innerHTML = '<span class="iconify animate-spin" data-icon="lucide:loader-2" data-width="16"></span> Submitting...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.innerHTML = '✓ Submitted!';
+    btn.classList.remove('bg-black');
+    btn.classList.add('bg-emerald-600');
+    success.classList.remove('hidden');
+
+    setTimeout(() => {
+      btn.innerHTML = 'Apply to Volunteer <span class="iconify" data-icon="lucide:heart" data-width="14"></span>';
+      btn.classList.remove('bg-emerald-600');
+      btn.classList.add('bg-black');
+      btn.disabled = false;
+      this.reset();
+      success.classList.add('hidden');
+    }, 3000);
+  }, 1500);
+});
+
+// ===== Smooth scroll for anchor links =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
